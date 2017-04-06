@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`conduit snapshots Inlet Inlet should not render its children 1`] = `null`;
+
+exports[`conduit snapshots Inlet and Outlet Inlet children are sent to their corresponding outlets 1`] = `
+<div>
+  <div
+    id="outlet1"
+  >
+    <div>
+      <div>
+        first inlet
+      </div>
+      <div>
+        second inlet
+      </div>
+    </div>
+  </div>
+  <div
+    id="outlet2"
+  >
+    <div>
+      <div>
+        third inlet
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`conduit snapshots Inlet and Outlet should merge the associated Inlet's children to the corresponding outlet 1`] = `
+<div>
+  <div>
+    <div>
+      first inlet
+    </div>
+    <div>
+      second inlet
+    </div>
+    <div>
+      third inlet
+    </div>
+  </div>
+</div>
+`;
+
+exports[`conduit snapshots Inlet and Outlet should output Inlet's children to the corresponding outlet 1`] = `
+<div>
+  <div>
+    this should be rendered in the outlet
+  </div>
+</div>
+`;
+
+exports[`conduit snapshots Inlet and Outlet two outlets with the same label will duplicate the children rendering 1`] = `
+<div>
+  <div>
+    <div>
+      inlet
+    </div>
+  </div>
+  <div>
+    <div>
+      inlet
+    </div>
+  </div>
+</div>
+`;
+
+exports[`conduit snapshots Outlet Outlet should not render its children 1`] = `<div />`;
