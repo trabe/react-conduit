@@ -11,14 +11,18 @@ class Outlet extends Component {
     this.updateChildren = this.updateChildren.bind(this);
   }
 
-  componentWillMount() {
-    watchOutlet(this.context.registry, this.props.label, this.updateChildren);
+  componentDidMount() {
+    this.removeWatch = watchOutlet(this.context.registry, this.props.label, this.updateChildren);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.label !== nextProps.label) {
       this.updateChildren();
     }
+  }
+
+  componentWillUnmount() {
+    this.removeWatch && this.removeWatch();
   }
 
   getChildren() {
