@@ -21,8 +21,8 @@ npm install --save react-conduit
 ## Usage
 
 First and foremost you need to wrap your react componentes with a `ConduitProvider`.
-After that you use an `<Inlet>` to wrap the components you need to render and and
-drop and `<Outlet>` wherever you want the components to be rendered.
+After that you use an `<Inlet>` to wrap the components you need to render and drop 
+an `<Outlet>` wherever you want the components to be rendered.
 
 ```
 import React from "react";
@@ -43,8 +43,9 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 ```
 
 You can drop several inlets and outlets in your application. Components inside inlets
-will be rendered on outlets based on their labels. *NOTE*: using the same label in several
-outputs will replicate the inlet-ed components.
+will be rendered on outlets based on their labels.
+
+**NOTE**: using the same label in several outputs will replicate the inlet-ed components.
 
 ## CHANGELOG
 
@@ -52,6 +53,6 @@ outputs will replicate the inlet-ed components.
 
 * Fixed subscription/unsubscription gotchas
 
-### v0.1.0
+### v0.1.0
 
 * Initial release
