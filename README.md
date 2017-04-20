@@ -93,6 +93,11 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### v0.2.0
+
+* Add index prop to Inlet to allow reordering at output time
+* Add className and style props to Outlet to customize the wrapper
+
 ### v0.1.1
 
 * Fixed subscription/unsubscription gotchas
