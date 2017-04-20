@@ -53,8 +53,8 @@ Outlet.propTypes = {
 };
 
 Outlet.defaultProps = {
-  className: "",
-  style: {},
+  className: null,
+  style: null,
 };
 
 export default Outlet;
