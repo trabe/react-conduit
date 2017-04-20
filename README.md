@@ -47,6 +47,21 @@ will be rendered on outlets based on their labels.
 
 **NOTE**: using the same label in several outputs will replicate the inlet-ed components.
 
+## API
+
+### Inlet
+
+| Prop     | Type       | Req? | Description                          |
+|:---------|:-----------|:-----|:-------------------------------------|
+| label    | string     |  ✓   | Label matching one of the outlets    |
+| index    | integer    |      | Index for ordering the outlet output |
+
+### Outlet
+
+| Prop     | Type       | Req? | Description       |
+|:---------|:-----------|:-----|:------------------|
+| label    | string     |  ✓   | Outlet identifier |
+
 ## CHANGELOG
 
 ### v0.1.1

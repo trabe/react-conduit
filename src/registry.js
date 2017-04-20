@@ -32,17 +32,22 @@ export const watchOutlet = ensureOutletInitialized((registry, outletId, fn) => {
 export const mergeInletChildren = ({ outlets, children }, outletId) =>
   createFragment(
     Array.from((outlets[outletId] && outlets[outletId].inlets) || [])
-      .map(inletId => [inletId, children[inletId]])
+      .sort((i1, i2) => i1.index - i2.index)
+      .map(inlet => [inlet.id, children[inlet.id]])
       .reduce((acc, [id, children]) => ({ ...acc, [id]: children }), {}),
   );
 
-export const addInlet = ensureOutletInitialized((registry, outletId, inletId) => {
-  registry.outlets[outletId].inlets.add(inletId);
+export const addInlet = ensureOutletInitialized((registry, outletId, inlet) => {
+  registry.outlets[outletId].inlets.add(inlet);
   notifyWatchers(registry, outletId);
 });
 
 export const removeInlet = ensureOutletInitialized((registry, outletId, inletId) => {
-  registry.outlets[outletId].inlets.delete(inletId);
+  registry.outlets[outletId].inlets.forEach(inlet => {
+    if (inlet.id === inletId) {
+      registry.outlets[outletId].inlets.delete(inlet);
+    }
+  });
   notifyWatchers(registry, outletId);
 });
 
@@ -50,7 +55,7 @@ export const updateChildren = (registry, inletId, children) => {
   registry.children[inletId] = children;
 
   Object.values(registry.outlets)
-    .filter(outlet => outlet.inlets.has(inletId))
+    .filter(outlet => Array.from(outlet.inlets).some(inlet => inlet.id === inletId))
     .forEach(outlet => notifyWatchers(registry, outlet.id));
 };
 

@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-3": "^6.22.0",
     "chai": "^3.5.0",
+    "chai-sorted": "^0.1.0",
     "enzyme": "^2.8.0",
     "enzyme-to-json": "^1.5.0",
     "jest": "^19.0.2",

@@ -1,11 +1,16 @@
 import React from "react";
 import Chai from "chai";
+import ChaiSorted from "chai-sorted";
 import * as r from "../src/registry";
 
+Chai.use(ChaiSorted);
 const expect = Chai.expect;
 
 describe("registry", () => {
   let registry;
+  const inlet1 = { id: "inlet1", index: 0 };
+  const inlet2 = { id: "inlet2", index: 1 };
+  const inlet3 = { id: "inlet3", index: 2 };
 
   beforeEach(() => {
     registry = r.createRegistry();
@@ -39,8 +44,8 @@ describe("registry", () => {
 
   describe("addInlet", () => {
     it("adds the inletId to the outlet's inlet set", () => {
-      r.addInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).to.include("inlet1");
+      r.addInlet(registry, "outlet1", inlet1);
+      expect(Array.from(registry.outlets["outlet1"].inlets)).to.include(inlet1);
     });
 
     it("notifies the outlet's watcher list", done => {
@@ -48,35 +53,36 @@ describe("registry", () => {
         done();
       };
       r.watchOutlet(registry, "outlet1", fn);
-      r.addInlet(registry, "outlet1", "inlet1");
+      r.addInlet(registry, "outlet1", inlet1);
     });
 
     it("does nothing if the inlet already exists", () => {
-      r.addInlet(registry, "outlet1", "inlet1");
-      r.addInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).to.include("inlet1");
+      r.addInlet(registry, "outlet1", inlet1);
+      r.addInlet(registry, "outlet1", inlet1);
+      r.removeInlet(registry, "outlet1", "inlet1");
+      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include(inlet1);
     });
   });
 
   describe("removeInlet", () => {
     it("removes the inletId from the outlet's inlet set", () => {
-      r.addInlet(registry, "outlet1", "inlet1");
+      r.addInlet(registry, "outlet1", inlet1);
       r.removeInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include("inlet1");
+      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include(inlet1);
     });
 
     it("notifies the outlet's watcher list", done => {
       const fn = () => {
         done();
       };
-      r.addInlet(registry, "outlet1", "inlet1");
+      r.addInlet(registry, "outlet1", inlet1);
       r.watchOutlet(registry, "outlet1", fn);
       r.removeInlet(registry, "outlet1", "inlet1");
     });
 
     it("does nothing if the inlet does not exist", () => {
       r.removeInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include("inlet1");
+      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include(inlet1);
     });
   });
 
@@ -89,11 +95,23 @@ describe("registry", () => {
       r.updateChildren(registry, "inlet1", children1);
       r.updateChildren(registry, "inlet2", children2);
       r.updateChildren(registry, "inlet3", children3);
-      r.addInlet(registry, "outlet1", "inlet1");
-      r.addInlet(registry, "outlet1", "inlet2");
-      r.addInlet(registry, "outlet1", "inlet3");
+      r.addInlet(registry, "outlet1", inlet1);
+      r.addInlet(registry, "outlet1", inlet2);
+      r.addInlet(registry, "outlet1", inlet1);
       const children = r.mergeInletChildren(registry, "outlet1");
       expect(Array.from(new Set(children.map(element => element.key))).length).to.equal(children.length);
+    });
+
+    it("merged children are ordered by index", () => {
+      r.updateChildren(registry, "inlet1", children1);
+      r.updateChildren(registry, "inlet2", children2);
+      r.updateChildren(registry, "inlet3", children3);
+      r.addInlet(registry, "outlet1", inlet3);
+      r.addInlet(registry, "outlet1", inlet2);
+      r.addInlet(registry, "outlet1", inlet1);
+      r.addInlet(registry, "outlet1", inlet1);
+      const children = r.mergeInletChildren(registry, "outlet1");
+      expect(children.map(element => element.key)).to.be.sorted();
     });
   });
 
@@ -110,7 +128,7 @@ describe("registry", () => {
       const fn2 = () => done(new Error("Should not invoke other outlets watchers"));
       const fn3 = () => done(new Error("Should not invoke other outlets watchers"));
 
-      r.addInlet(registry, "outlet1", "inlet1");
+      r.addInlet(registry, "outlet1", inlet1);
       r.watchOutlet(registry, "outlet1", fn1);
       r.watchOutlet(registry, "outlet2", fn2);
       r.watchOutlet(registry, "outlet3", fn3);
