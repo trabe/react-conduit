@@ -86,5 +86,15 @@ describe("conduit snapshots", () => {
       );
       expect(wrapper).toMatchSnapshot();
     });
+
+    it("the className and style of an outlet can be customized", () => {
+      const wrapper = renderWithProvider(
+        <div>
+          <Inlet label="1"><div>inlet</div></Inlet>
+          <Outlet label="1" className="test-class" style={{ color: "initial" }}/>
+        </div>,
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
   });
 });

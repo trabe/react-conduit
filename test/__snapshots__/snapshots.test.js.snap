@@ -52,6 +52,19 @@ exports[`conduit snapshots Inlet and Outlet should output Inlet's children to th
 </div>
 `;
 
+exports[`conduit snapshots Inlet and Outlet the className and style of an outlet can be customized 1`] = `
+<div>
+  <div
+    class="test-class"
+    style="color:initial;"
+  >
+    <div>
+      inlet
+    </div>
+  </div>
+</div>
+`;
+
 exports[`conduit snapshots Inlet and Outlet two outlets with the same label will duplicate the children rendering 1`] = `
 <div>
   <div>
