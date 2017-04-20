@@ -20,7 +20,7 @@ npm install --save react-conduit
 
 ## Usage
 
-First and foremost you need to wrap your react componentes with a `ConduitProvider`.
+First and foremost you need to wrap your react componentes with a `<ConduitProvider>`.
 After that you use an `<Inlet>` to wrap the components you need to render and drop 
 an `<Outlet>` wherever you want the components to be rendered.
 
@@ -47,6 +47,33 @@ will be rendered on outlets based on their labels.
 
 **NOTE**: using the same label in several outputs will replicate the inlet-ed components.
 
+It's possible to force the order of the elements that are being output at a certain outlet
+by passing an `index` prop to the `<Inlet>` (defaults to 0, thus elements are output by registering
+in the inlet order). Negative numbers will be rendered first in the DOM.
+
+To further customize the element that wraps the outlet you can use both `className` and `style`
+props in the `<Outlet>`.
+
+```
+import React from "react";
+import { Inlet, Outlet, ConduitProvider } from "react-conduit";
+
+<ConduitProvider>
+  <div className="divA">
+    <p>This paragraph will be a .divA child in the DOM</p>
+    <Inlet label="test">
+      <p>This paragraph will be the second .divB child in the DOM</p>
+    </Inlet>
+    <Inlet label="test" index="-1">
+      <p>This paragraph will be the first .divB child in the DOM</p>
+    </Inlet>
+  </div>
+
+  <Outlet label="test" className="divB" />
+</ConduitProvider>
+```
+
+
 ## API
 
 ### Inlet
@@ -58,9 +85,11 @@ will be rendered on outlets based on their labels.
 
 ### Outlet
 
-| Prop     | Type       | Req? | Description       |
-|:---------|:-----------|:-----|:------------------|
-| label    | string     |  ✓   | Outlet identifier |
+| Prop      | Type       | Req? | Description                                 |
+|:----------|:-----------|:-----|:--------------------------------------------|
+| label     | string     |  ✓   | Outlet identifier                           |
+| className | string     |      | Additional className for the outlet wrapper |
+| style     | object     |      | Additional styles for the outlet wrapper    |
 
 ## CHANGELOG
 
