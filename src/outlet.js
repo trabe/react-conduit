@@ -35,7 +35,7 @@ class Outlet extends Component {
 
   render() {
     return (
-      <div>
+      <div className={this.props.className} style={this.props.style}>
         {this.state.children}
       </div>
     );
@@ -46,8 +46,15 @@ Outlet.contextTypes = {
   registry: PropTypes.object.isRequired,
 };
 
-Outlet.PropTypes = {
+Outlet.propTypes = {
   label: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  style: PropTypes.object,
+};
+
+Outlet.defaultProps = {
+  className: "",
+  style: {},
 };
 
 export default Outlet;
