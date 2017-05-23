@@ -1,6 +1,6 @@
 {
   "name": "react-conduit",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Place components anywhere in your dom tree",
   "main": "lib/index.js",
   "repository": {
@@ -10,22 +10,22 @@
   "author": "Roman Coedo <romancoedo@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-core": "^6.24.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-react": "^6.23.0",
-    "babel-preset-stage-3": "^6.22.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "chai": "^3.5.0",
     "chai-sorted": "^0.1.0",
-    "enzyme": "^2.8.0",
-    "enzyme-to-json": "^1.5.0",
-    "jest": "^19.0.2",
-    "prettier": "^0.22.0",
-    "react": "^15.4.2",
-    "react-addons-create-fragment": "^15.4.2",
-    "react-addons-test-utils": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "sinon": "^2.1.0"
+    "enzyme": "^2.8.2",
+    "enzyme-to-json": "^1.5.1",
+    "jest": "^20.0.3",
+    "prettier": "^1.3.1",
+    "react": "^15.5.4",
+    "react-addons-create-fragment": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
+    "sinon": "^2.3.1"
   },
   "scripts": {
     "clean": "rm -rf ./lib",
@@ -37,8 +37,8 @@
     "prepublish": "npm run compile"
   },
   "peerDependencies": {
-    "react": ">= 0.14.x",
-    "react-addons-create-fragment": ">= 0.14.x"
+    "react": "^15.5.0",
+    "react-addons-create-fragment": "^15.5.0"
   },
   "babel": {
     "presets": [
@@ -53,6 +53,7 @@
     ]
   },
   "dependencies": {
+    "prop-types": "^15.5.10",
     "uuid": "^3.0.1"
   }
 }
