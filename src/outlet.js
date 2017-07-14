@@ -1,38 +1,41 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { watchOutlet, mergeInletChildren } from "./registry";
+import uuidV4 from "uuid";
 
 class Outlet extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.id = uuidV4();
     this.state = { children: this.getChildren() };
-
-    this.getChildren = this.getChildren.bind(this);
-    this.updateChildren = this.updateChildren.bind(this);
   }
 
-  componentDidMount() {
-    this.removeWatch = watchOutlet(this.context.registry, this.props.label, this.updateChildren);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.label !== nextProps.label) {
-      this.updateChildren();
+  componentDidUpdate(prevProps) {
+    if (this.props.label !== prevProps.label) {
+      this.context.registry.rewireOutlet(this);
     }
   }
 
+  componentDidMount() {
+    this.context.registry.registerOutlet(this);
+  }
+
   componentWillUnmount() {
-    this.removeWatch && this.removeWatch();
+    this.context.registry.unregisterOutlet(this);
   }
 
-  getChildren() {
-    return mergeInletChildren(this.context.registry, this.props.label);
-  }
+  getChildren = () => this.context.registry.mergeChildrenForLabel(this.getLabel());
 
-  updateChildren() {
-    this.setState({ children: this.getChildren() });
-  }
+  // Registry Outlet API
+  getId = () => this.id;
+  getLabel = () => this.props.label;
+  onDisconnect = conduit => {
+    this.props.onDisconnect(conduit.simplify());
+  };
+  onConnect = conduit => {
+    this.props.onConnect(conduit.simplify());
+  };
+  forceRender = () => this.setState({ children: this.getChildren() });
 
   render() {
     return (
@@ -51,11 +54,15 @@ Outlet.propTypes = {
   label: PropTypes.string.isRequired,
   className: PropTypes.string,
   style: PropTypes.object,
+  onDisconnect: PropTypes.func,
+  onConnect: PropTypes.func,
 };
 
 Outlet.defaultProps = {
   className: null,
   style: null,
+  onDisconnect: () => {},
+  onConnect: () => {},
 };
 
 export default Outlet;

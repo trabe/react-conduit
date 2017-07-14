@@ -9,22 +9,32 @@ export class Inlet extends Component {
     this.id = uuidV4();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.label !== nextProps.label) {
-      removeInlet(this.context.registry, this.props.label, this.id);
-      addInlet(this.context.registry, nextProps.label, { id: this.id, index: this.props.index });
+  componentDidUpdate(prevProps) {
+    if (this.props.label !== prevProps.label) {
+      this.context.registry.rewireInlet(this);
     }
-    updateChildren(this.context.registry, this.id, nextProps.children);
+    this.context.registry.updateConduits(this);
   }
 
   componentWillMount() {
-    addInlet(this.context.registry, this.props.label, { id: this.id, index: this.props.index });
-    updateChildren(this.context.registry, this.id, this.props.children);
+    this.context.registry.registerInlet(this);
   }
 
   componentWillUnmount() {
-    removeInlet(this.context.registry, this.props.label, this.id);
+    this.context.registry.unregisterInlet(this);
   }
+
+  // Registry Inlet API
+  getId = () => this.id;
+  getLabel = () => this.props.label;
+  getIndex = () => this.props.index;
+  getChildren = () => this.props.children;
+  onDisconnect = conduit => {
+    this.props.onDisconnect(conduit.simplify());
+  };
+  onConnect = conduit => {
+    this.props.onConnect(conduit.simplify());
+  };
 
   render() {
     return null;
@@ -38,10 +48,14 @@ Inlet.contextTypes = {
 Inlet.propTypes = {
   label: PropTypes.string.isRequired,
   index: PropTypes.number,
+  onDisconnect: PropTypes.func,
+  onConnect: PropTypes.func,
 };
 
 Inlet.defaultProps = {
   index: 0,
+  onDisconnect: () => {},
+  onConnect: () => {},
 };
 
 export default Inlet;

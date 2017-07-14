@@ -1,13 +1,13 @@
 import React, { Component, Children } from "react";
 import PropTypes from "prop-types";
-import { createRegistry } from "./registry";
+import Registry from "./registry";
 
 class ConduitProvider extends Component {
   constructor(props) {
     super(props);
     const { registry } = this.props;
 
-    this.registry = registry ? registry : createRegistry();
+    this.registry = registry ? registry : new Registry();
   }
 
   getChildContext() {
