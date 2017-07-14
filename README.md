@@ -6,10 +6,8 @@ react-conduit allows you to render React components anywhere. Typical use case
 scenarios are:
 
 * Keep shared state in the parent but render the children anywhere.
+* Imperative APIs for things like rendering alerts or confirmations in a different react application and send it to your main application.
 * Render componentes in z-indexed layers with ease.
-
-Similiar to https://github.com/tajo/react-portal but components are always rendered
-inside the React application.
 
 
 ## Installation
@@ -78,20 +76,29 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ### Inlet
 
-| Prop     | Type       | Req? | Description                          |
-|:---------|:-----------|:-----|:-------------------------------------|
-| label    | string     |  ✓   | Label matching one of the outlets    |
-| index    | integer    |      | Index for ordering the outlet output |
+| Prop         | Type       | Req? | Description                                              |
+|:-------------|:-----------|:-----|:---------------------------------------------------------|
+| label        | string     |  ✓   | Label matching one of the outlets                        |
+| index        | integer    |      | Index for ordering the outlet output                     |
+| onConnect    | func       |      | Callback invoked when a new conduit is connected         |
+| onDisconnect | func       |      | Callback invoked when a conduit gets disconnected        |
 
 ### Outlet
 
-| Prop      | Type       | Req? | Description                                 |
-|:----------|:-----------|:-----|:--------------------------------------------|
-| label     | string     |  ✓   | Outlet identifier                           |
-| className | string     |      | Additional className for the outlet wrapper |
-| style     | object     |      | Additional styles for the outlet wrapper    |
+| Prop         | Type       | Req? | Description                                              |
+|:-------------|:-----------|:-----|:---------------------------------------------------------|
+| label        | string     |  ✓   | Outlet identifier                                        |
+| className    | string     |      | Additional className for the outlet wrapper              |
+| style        | object     |      | Additional styles for the outlet wrapper                 |
+| onConnect    | func       |      | Callback invoked when a new conduit is connected         |
+| onDisconnect | func       |      | Callback invoked when a conduit gets disconnected        |
 
 ## CHANGELOG
+
+### v1.0.0
+
+* Add `onDisconnect` and `onConnect` callbacks to inlets and outlets
+* Big refactor. Docs are on their way!
 
 ### v0.2.0
 
