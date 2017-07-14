@@ -91,7 +91,7 @@ describe("conduit snapshots", () => {
       const wrapper = renderWithProvider(
         <div>
           <Inlet label="1"><div>inlet</div></Inlet>
-          <Outlet label="1" className="test-class" style={{ color: "initial" }}/>
+          <Outlet label="1" className="test-class" style={{ color: "initial" }} />
         </div>,
       );
       expect(wrapper).toMatchSnapshot();

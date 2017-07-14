@@ -1,152 +1,113 @@
 import React from "react";
+import { mount } from "enzyme";
+import sinon from "sinon";
 import Chai from "chai";
 import ChaiSorted from "chai-sorted";
-import * as r from "../src/registry";
+import { ConduitProvider, Inlet, Outlet, Registry } from "../src";
 
 Chai.use(ChaiSorted);
 const expect = Chai.expect;
 
+const mountWithRegister = (element, registry) => mount(element, { context: { registry } });
+const mountWithProvider = element => mount(<ConduitProvider>{element}</ConduitProvider>);
+
 describe("registry", () => {
   let registry;
-  const inlet1 = { id: "inlet1", index: 0 };
-  const inlet2 = { id: "inlet2", index: 1 };
-  const inlet3 = { id: "inlet3", index: 2 };
 
   beforeEach(() => {
-    registry = r.createRegistry();
+    registry = new Registry();
   });
 
-  describe("createRegistry", () => {
-    it("creates an empty registry", () => {
-      expect(registry).to.deep.equal({ outlets: {}, children: {} });
-    });
+  it("should merge all the children from matching inlets", () => {
+    const wrapper = mountWithProvider(
+      <div>
+        <Inlet label="1">
+          <div>c0</div>
+        </Inlet>
+        <Inlet label="1">
+          <div>c1</div>
+        </Inlet>
+        <Inlet label="1">
+          <div>c2</div>
+        </Inlet>
+        <Outlet label="1" />
+      </div>,
+    );
+
+    wrapper.find(Outlet).children().forEach((c, i) => expect(c.html()).to.equal(`<div>c${i}</div>`));
   });
 
-  describe("watchOutlet", () => {
-    it("initializes the outlet if it doesn't exist", () => {
-      r.watchOutlet(registry, "1", () => {});
-      expect(registry.outlets).to.include.keys("1");
-    });
+  it("should update outlet when inlets change their children", () => {
+    const inlet = mountWithRegister(<Inlet label="1"><p>content</p></Inlet>, registry);
+    const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
-    it("adds the function to the watcher list", () => {
-      const fn = () => {};
-      r.watchOutlet(registry, "1", fn);
-      expect(Object.values(registry.outlets["1"].watchers)).to.include(fn);
-    });
-
-    it("returns a function that unregisters the watcher", () => {
-      const fn = () => {};
-      const unregister = r.watchOutlet(registry, "1", fn);
-      unregister();
-      expect(Object.values(registry.outlets["1"].watchers)).not.to.include(fn);
-    });
+    expect(outlet.html()).to.equal("<div><p>content</p></div>");
+    inlet.setProps({ children: <p>new content</p> });
+    expect(outlet.html()).to.equal("<div><p>new content</p></div>");
   });
 
-  describe("addInlet", () => {
-    it("adds the inletId to the outlet's inlet set", () => {
-      r.addInlet(registry, "outlet1", inlet1);
-      expect(Array.from(registry.outlets["outlet1"].inlets)).to.include(inlet1);
-    });
+  it("should update outlets when inlets change their labels", () => {
+    const inlet = mountWithRegister(<Inlet label="1"><p>content</p></Inlet>, registry);
+    const outlet1 = mountWithRegister(<Outlet label="1" />, registry);
+    const outlet2 = mountWithRegister(<Outlet label="2" />, registry);
 
-    it("notifies the outlet's watcher list", done => {
-      const fn = () => {
-        done();
-      };
-      r.watchOutlet(registry, "outlet1", fn);
-      r.addInlet(registry, "outlet1", inlet1);
-    });
-
-    it("does nothing if the inlet already exists", () => {
-      r.addInlet(registry, "outlet1", inlet1);
-      r.addInlet(registry, "outlet1", inlet1);
-      r.removeInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include(inlet1);
-    });
+    expect(outlet1.html()).to.equal("<div><p>content</p></div>");
+    expect(outlet2.html()).to.equal("<div></div>");
+    inlet.setProps({ label: "2" });
+    expect(outlet1.html()).to.equal("<div></div>");
+    expect(outlet2.html()).to.equal("<div><p>content</p></div>");
   });
 
-  describe("removeInlet", () => {
-    it("removes the inletId from the outlet's inlet set", () => {
-      r.addInlet(registry, "outlet1", inlet1);
-      r.removeInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include(inlet1);
-    });
+  it("should update outlet when it changes its label", () => {
+    const inlet1 = mountWithRegister(<Inlet label="1"><p>content 1</p></Inlet>, registry);
+    const inlet2 = mountWithRegister(<Inlet label="2"><p>content 2</p></Inlet>, registry);
+    const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
-    it("notifies the outlet's watcher list", done => {
-      const fn = () => {
-        done();
-      };
-      r.addInlet(registry, "outlet1", inlet1);
-      r.watchOutlet(registry, "outlet1", fn);
-      r.removeInlet(registry, "outlet1", "inlet1");
-    });
-
-    it("does nothing if the inlet does not exist", () => {
-      r.removeInlet(registry, "outlet1", "inlet1");
-      expect(Array.from(registry.outlets["outlet1"].inlets)).not.to.include(inlet1);
-    });
+    expect(outlet.html()).to.equal("<div><p>content 1</p></div>");
+    outlet.setProps({ label: "2" });
+    expect(outlet.html()).to.equal("<div><p>content 2</p></div>");
   });
 
-  describe("mergeInletChildren", () => {
-    const children1 = <div>children</div>;
-    const children2 = <div>children</div>;
-    const children3 = <div>children</div>;
+  it("should update outlet when a new inlet is rendered", () => {
+    const inlet1 = mountWithRegister(<Inlet label="1"><p>content 1</p></Inlet>, registry);
+    const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
-    it("merged children keys are unique", () => {
-      r.updateChildren(registry, "inlet1", children1);
-      r.updateChildren(registry, "inlet2", children2);
-      r.updateChildren(registry, "inlet3", children3);
-      r.addInlet(registry, "outlet1", inlet1);
-      r.addInlet(registry, "outlet1", inlet2);
-      r.addInlet(registry, "outlet1", inlet1);
-      const children = r.mergeInletChildren(registry, "outlet1");
-      expect(Array.from(new Set(children.map(element => element.key))).length).to.equal(children.length);
-    });
-
-    it("merged children are ordered by index", () => {
-      r.updateChildren(registry, "inlet1", children1);
-      r.updateChildren(registry, "inlet2", children2);
-      r.updateChildren(registry, "inlet3", children3);
-      r.addInlet(registry, "outlet1", inlet3);
-      r.addInlet(registry, "outlet1", inlet2);
-      r.addInlet(registry, "outlet1", inlet1);
-      r.addInlet(registry, "outlet1", inlet1);
-      const children = r.mergeInletChildren(registry, "outlet1");
-      expect(children.map(element => element.key)).to.be.sorted();
-    });
+    expect(outlet.html()).to.equal("<div><p>content 1</p></div>");
+    mountWithRegister(<Inlet label="1"><p>content 2</p></Inlet>, registry);
+    expect(outlet.html()).to.equal("<div><p>content 1</p><p>content 2</p></div>");
   });
 
-  describe("updateChildren", () => {
-    const children = <div>children</div>;
+  it("should update outlet when an inlet is unmounted", () => {
+    const inlet1 = mountWithRegister(<Inlet label="1"><p>content 1</p></Inlet>, registry);
+    const inlet2 = mountWithRegister(<Inlet label="1"><p>content 2</p></Inlet>, registry);
+    const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
-    it("sets the children for the inlet", () => {
-      r.updateChildren(registry, "inlet1", children);
-      expect(registry.children["inlet1"]).to.equal(children);
-    });
-
-    it("notifies only the outlet watchers where the inlet is included", done => {
-      const fn1 = () => done();
-      const fn2 = () => done(new Error("Should not invoke other outlets watchers"));
-      const fn3 = () => done(new Error("Should not invoke other outlets watchers"));
-
-      r.addInlet(registry, "outlet1", inlet1);
-      r.watchOutlet(registry, "outlet1", fn1);
-      r.watchOutlet(registry, "outlet2", fn2);
-      r.watchOutlet(registry, "outlet3", fn3);
-      r.updateChildren(registry, "inlet1", children);
-    });
+    expect(outlet.html()).to.equal("<div><p>content 1</p><p>content 2</p></div>");
+    inlet2.unmount();
+    expect(outlet.html()).to.equal("<div><p>content 1</p></div>");
   });
 
-  describe("notifyWatchers", () => {
-    it("notifies watchers", done => {
-      const fn = () => {
-        done();
-      };
-      r.watchOutlet(registry, "outlet1", fn);
-      r.notifyWatchers(registry, "outlet1");
-    });
+  it("should invoke onDisconnect on both inlet and outlet when a conduit gets disconnected", () => {
+    const inletSpy = sinon.spy();
+    const outletSpy = sinon.spy();
 
-    it("does nothing if nobody is watching", () => {
-      r.notifyWatchers(registry, "outlet1");
-    });
+    const inlet = mountWithRegister(<Inlet label="1" onDisconnect={inletSpy}><p>content</p></Inlet>, registry);
+    const outlet = mountWithRegister(<Outlet label="1" onDisconnect={outletSpy} />, registry);
+
+    expect(outlet.html()).to.equal("<div><p>content</p></div>");
+    inlet.unmount();
+    expect(inletSpy.calledOnce).to.equal(true);
+    expect(outletSpy.calledOnce).to.equal(true);
+  });
+
+  it("should invoke onConnect on both inlet and outlet when a new conduit is connected", () => {
+    const inletSpy = sinon.spy();
+    const outletSpy = sinon.spy();
+
+    const inlet = mountWithRegister(<Inlet label="1" onConnect={inletSpy}><p>content</p></Inlet>, registry);
+    const outlet = mountWithRegister(<Outlet label="1" onConnect={outletSpy} />, registry);
+
+    expect(inletSpy.calledOnce).to.equal(true);
+    expect(outletSpy.calledOnce).to.equal(true);
   });
 });
