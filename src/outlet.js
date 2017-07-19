@@ -30,10 +30,10 @@ class Outlet extends Component {
   getId = () => this.id;
   getLabel = () => this.props.label;
   onDisconnect = conduit => {
-    this.props.onDisconnect(conduit.simplify());
+    this.props.onDisconnect(conduit.members());
   };
   onConnect = conduit => {
-    this.props.onConnect(conduit.simplify());
+    this.props.onConnect(conduit.members());
   };
   forceRender = () => this.setState({ children: this.getChildren() });
 

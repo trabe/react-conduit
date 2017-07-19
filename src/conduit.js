@@ -18,7 +18,7 @@ class Conduit {
   getInlet = () => this.inlet;
   getOutlet = () => this.outlet;
   update = () => this.outlet.forceRender();
-  simplify = () => ({ inlet: this.inlet, outlet: this.outlet });
+  members = () => ({ inlet: this.inlet, outlet: this.outlet });
   toString = () => `${this.getId()}: ${this.inlet.getLabel()} -> ${this.outlet.getLabel()}`;
 }
 
