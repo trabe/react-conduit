@@ -30,10 +30,10 @@ export class Inlet extends Component {
   getIndex = () => this.props.index;
   getChildren = () => this.props.children;
   onDisconnect = conduit => {
-    this.props.onDisconnect(conduit.simplify());
+    this.props.onDisconnect(conduit.members());
   };
   onConnect = conduit => {
-    this.props.onConnect(conduit.simplify());
+    this.props.onConnect(conduit.members());
   };
 
   render() {
