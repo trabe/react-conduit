@@ -47,7 +47,7 @@ will be rendered on outlets based on their labels.
 
 It's possible to force the order of the elements that are being output at a certain outlet
 by passing an `index` prop to the `<Inlet>` (defaults to 0, thus elements are output by registering
-in the inlet order). Negative numbers will be rendered first in the DOM.
+in the inlet order). **Negative numbers will be rendered first in the DOM**.
 
 To further customize the element that wraps the outlet you can use both `className` and `style`
 props in the `<Outlet>`.
@@ -62,7 +62,7 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
     <Inlet label="test">
       <p>This paragraph will be the second .divB child in the DOM</p>
     </Inlet>
-    <Inlet label="test" index="-1">
+    <Inlet label="test" index={-1}>
       <p>This paragraph will be the first .divB child in the DOM</p>
     </Inlet>
   </div>
@@ -76,12 +76,12 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ### Inlet
 
-| Prop         | Type       | Req? | Description                                              |
-|:-------------|:-----------|:-----|:---------------------------------------------------------|
-| label        | string     |  ✓   | Label matching one of the outlets                        |
-| index        | integer    |      | Index for ordering the outlet output                     |
-| onConnect    | func       |      | Callback invoked when a new conduit is connected         |
-| onDisconnect | func       |      | Callback invoked when a conduit gets disconnected        |
+| Prop           | Type         | Req?   | Description                                                                   |
+| :------------- | :----------- | :----- | :-----------------------------------------------------------------------------|
+| label          | string       | ✓      | Label matching one of the outlets                                             |
+| index          | integer      |        | Index for ordering the outlet output. Negative indexes will be rendered first |
+| onConnect      | func         |        | Callback invoked when a new conduit is connected                              |
+| onDisconnect   | func         |        | Callback invoked when a conduit gets disconnected                             |
 
 ### Outlet
 
@@ -94,6 +94,10 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 | onDisconnect | func       |      | Callback invoked when a conduit gets disconnected        |
 
 ## CHANGELOG
+
+### v1.0.1
+
+* Fix Inlet ordering not working
 
 ### v1.0.0
 

@@ -176,7 +176,7 @@ class Registry {
   mergeChildrenForLabel = label =>
     createFragment(
       this.findInletsByLabel(label)
-        .sort((i1, i2) => i1.index - i2.index)
+        .sort((i1, i2) => i1.props.index - i2.props.index)
         .map(inlet => [inlet.getId(), inlet.getChildren()])
         .reduce((acc, [id, children]) => ({ ...acc, [id]: children }), {}),
     );

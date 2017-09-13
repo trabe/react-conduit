@@ -47,9 +47,15 @@ describe("conduit snapshots", () => {
     it("should merge the associated Inlet's children to the corresponding outlet", () => {
       const wrapper = renderWithProvider(
         <div>
-          <Inlet label="1"><div>first inlet</div></Inlet>
-          <Inlet label="1"><div>second inlet</div></Inlet>
-          <Inlet label="1"><div>third inlet</div></Inlet>
+          <Inlet label="1">
+            <div>first inlet</div>
+          </Inlet>
+          <Inlet label="1">
+            <div>second inlet</div>
+          </Inlet>
+          <Inlet label="1">
+            <div>third inlet</div>
+          </Inlet>
 
           <Outlet label="1" />
         </div>,
@@ -60,9 +66,15 @@ describe("conduit snapshots", () => {
     it("Inlet children are sent to their corresponding outlets", () => {
       const wrapper = renderWithProvider(
         <div>
-          <Inlet label="1"><div>first inlet</div></Inlet>
-          <Inlet label="1"><div>second inlet</div></Inlet>
-          <Inlet label="2"><div>third inlet</div></Inlet>
+          <Inlet label="1">
+            <div>first inlet</div>
+          </Inlet>
+          <Inlet label="1">
+            <div>second inlet</div>
+          </Inlet>
+          <Inlet label="2">
+            <div>third inlet</div>
+          </Inlet>
 
           <div id="outlet1">
             <Outlet label="1" />
@@ -78,7 +90,9 @@ describe("conduit snapshots", () => {
     it("two outlets with the same label will duplicate the children rendering", () => {
       const wrapper = renderWithProvider(
         <div>
-          <Inlet label="1"><div>inlet</div></Inlet>
+          <Inlet label="1">
+            <div>inlet</div>
+          </Inlet>
 
           <Outlet label="1" />
           <Outlet label="1" />
@@ -90,8 +104,28 @@ describe("conduit snapshots", () => {
     it("the className and style of an outlet can be customized", () => {
       const wrapper = renderWithProvider(
         <div>
-          <Inlet label="1"><div>inlet</div></Inlet>
+          <Inlet label="1">
+            <div>inlet</div>
+          </Inlet>
           <Outlet label="1" className="test-class" style={{ color: "initial" }} />
+        </div>,
+      );
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it("honors the inlet index props", () => {
+      const wrapper = renderWithProvider(
+        <div>
+          <Inlet index={1} label="1">
+            <div>last</div>
+          </Inlet>
+          <Inlet label="1">
+            <div>second</div>
+          </Inlet>
+          <Inlet index={-1} label="1">
+            <div>first</div>
+          </Inlet>
+          <Outlet label="1" />
         </div>,
       );
       expect(wrapper).toMatchSnapshot();

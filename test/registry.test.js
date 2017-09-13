@@ -9,7 +9,12 @@ Chai.use(ChaiSorted);
 const expect = Chai.expect;
 
 const mountWithRegister = (element, registry) => mount(element, { context: { registry } });
-const mountWithProvider = element => mount(<ConduitProvider>{element}</ConduitProvider>);
+const mountWithProvider = element =>
+  mount(
+    <ConduitProvider>
+      {element}
+    </ConduitProvider>,
+  );
 
 describe("registry", () => {
   let registry;
@@ -18,17 +23,17 @@ describe("registry", () => {
     registry = new Registry();
   });
 
-  it("should merge all the children from matching inlets", () => {
+  it.only("should merge all the children from matching inlets", () => {
     const wrapper = mountWithProvider(
       <div>
-        <Inlet label="1">
-          <div>c0</div>
-        </Inlet>
         <Inlet label="1">
           <div>c1</div>
         </Inlet>
         <Inlet label="1">
           <div>c2</div>
+        </Inlet>
+        <Inlet label="1" index={-1}>
+          <div>c0</div>
         </Inlet>
         <Outlet label="1" />
       </div>,
@@ -38,7 +43,12 @@ describe("registry", () => {
   });
 
   it("should update outlet when inlets change their children", () => {
-    const inlet = mountWithRegister(<Inlet label="1"><p>content</p></Inlet>, registry);
+    const inlet = mountWithRegister(
+      <Inlet label="1">
+        <p>content</p>
+      </Inlet>,
+      registry,
+    );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
     expect(outlet.html()).to.equal("<div><p>content</p></div>");
@@ -47,7 +57,12 @@ describe("registry", () => {
   });
 
   it("should update outlets when inlets change their labels", () => {
-    const inlet = mountWithRegister(<Inlet label="1"><p>content</p></Inlet>, registry);
+    const inlet = mountWithRegister(
+      <Inlet label="1">
+        <p>content</p>
+      </Inlet>,
+      registry,
+    );
     const outlet1 = mountWithRegister(<Outlet label="1" />, registry);
     const outlet2 = mountWithRegister(<Outlet label="2" />, registry);
 
@@ -59,8 +74,18 @@ describe("registry", () => {
   });
 
   it("should update outlet when it changes its label", () => {
-    const inlet1 = mountWithRegister(<Inlet label="1"><p>content 1</p></Inlet>, registry);
-    const inlet2 = mountWithRegister(<Inlet label="2"><p>content 2</p></Inlet>, registry);
+    const inlet1 = mountWithRegister(
+      <Inlet label="1">
+        <p>content 1</p>
+      </Inlet>,
+      registry,
+    );
+    const inlet2 = mountWithRegister(
+      <Inlet label="2">
+        <p>content 2</p>
+      </Inlet>,
+      registry,
+    );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
     expect(outlet.html()).to.equal("<div><p>content 1</p></div>");
@@ -69,17 +94,37 @@ describe("registry", () => {
   });
 
   it("should update outlet when a new inlet is rendered", () => {
-    const inlet1 = mountWithRegister(<Inlet label="1"><p>content 1</p></Inlet>, registry);
+    const inlet1 = mountWithRegister(
+      <Inlet label="1">
+        <p>content 1</p>
+      </Inlet>,
+      registry,
+    );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
     expect(outlet.html()).to.equal("<div><p>content 1</p></div>");
-    mountWithRegister(<Inlet label="1"><p>content 2</p></Inlet>, registry);
+    mountWithRegister(
+      <Inlet label="1">
+        <p>content 2</p>
+      </Inlet>,
+      registry,
+    );
     expect(outlet.html()).to.equal("<div><p>content 1</p><p>content 2</p></div>");
   });
 
   it("should update outlet when an inlet is unmounted", () => {
-    const inlet1 = mountWithRegister(<Inlet label="1"><p>content 1</p></Inlet>, registry);
-    const inlet2 = mountWithRegister(<Inlet label="1"><p>content 2</p></Inlet>, registry);
+    const inlet1 = mountWithRegister(
+      <Inlet label="1">
+        <p>content 1</p>
+      </Inlet>,
+      registry,
+    );
+    const inlet2 = mountWithRegister(
+      <Inlet label="1">
+        <p>content 2</p>
+      </Inlet>,
+      registry,
+    );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
     expect(outlet.html()).to.equal("<div><p>content 1</p><p>content 2</p></div>");
@@ -91,7 +136,12 @@ describe("registry", () => {
     const inletSpy = sinon.spy();
     const outletSpy = sinon.spy();
 
-    const inlet = mountWithRegister(<Inlet label="1" onDisconnect={inletSpy}><p>content</p></Inlet>, registry);
+    const inlet = mountWithRegister(
+      <Inlet label="1" onDisconnect={inletSpy}>
+        <p>content</p>
+      </Inlet>,
+      registry,
+    );
     const outlet = mountWithRegister(<Outlet label="1" onDisconnect={outletSpy} />, registry);
 
     expect(outlet.html()).to.equal("<div><p>content</p></div>");
@@ -104,7 +154,12 @@ describe("registry", () => {
     const inletSpy = sinon.spy();
     const outletSpy = sinon.spy();
 
-    const inlet = mountWithRegister(<Inlet label="1" onConnect={inletSpy}><p>content</p></Inlet>, registry);
+    const inlet = mountWithRegister(
+      <Inlet label="1" onConnect={inletSpy}>
+        <p>content</p>
+      </Inlet>,
+      registry,
+    );
     const outlet = mountWithRegister(<Outlet label="1" onConnect={outletSpy} />, registry);
 
     expect(inletSpy.calledOnce).to.equal(true);

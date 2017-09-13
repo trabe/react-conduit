@@ -28,6 +28,22 @@ exports[`conduit snapshots Inlet and Outlet Inlet children are sent to their cor
 </div>
 `;
 
+exports[`conduit snapshots Inlet and Outlet honors the inlet index props 1`] = `
+<div>
+  <div>
+    <div>
+      first
+    </div>
+    <div>
+      second
+    </div>
+    <div>
+      last
+    </div>
+  </div>
+</div>
+`;
+
 exports[`conduit snapshots Inlet and Outlet should merge the associated Inlet's children to the corresponding outlet 1`] = `
 <div>
   <div>
