@@ -95,6 +95,10 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### v1.0.2
+
+* Support for React 16
+
 ### v1.0.1
 
 * Fix Inlet ordering not working

@@ -1,6 +1,6 @@
 {
   "name": "react-conduit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Place components anywhere in your dom tree",
   "main": "lib/index.js",
   "repository": {
@@ -39,7 +39,7 @@
     "prepublish": "npm run compile"
   },
   "peerDependencies": {
-    "react": "^15.5.0",
+    "react": "^15.5.0 || ^16.0.0",
     "react-addons-create-fragment": "^15.5.0"
   },
   "babel": {
