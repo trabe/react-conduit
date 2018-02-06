@@ -72,7 +72,7 @@ exports[`conduit snapshots Inlet and Outlet the className and style of an outlet
 <div>
   <div
     class="test-class"
-    style="color:initial;"
+    style="color:initial"
   >
     <div>
       inlet

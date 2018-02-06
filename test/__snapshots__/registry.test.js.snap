@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`registry should merge all the children from matching inlets 1`] = `
+<div>
+  <div>
+    <div>
+      c0
+    </div>
+    <div>
+      c1
+    </div>
+    <div>
+      c2
+    </div>
+  </div>
+</div>
+`;
