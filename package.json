@@ -1,13 +1,21 @@
 {
   "name": "react-conduit",
   "version": "1.0.2",
-  "description": "Place components anywhere in your dom tree",
+  "description": "Place components anywhere in your DOM tree",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/trabe/react-conduit.git"
   },
-  "author": "Roman Coedo <romancoedo@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/trabe/react-conduit/issues"
+  },
+  "homepage": "https://github.com/trabe/react-conduit",
+  "author": "Roman Coedo <roman@trabe.io>",
+  "contributors": [
+    "David Barral <david@trabe.io>",
+    "Asís García <asis@trabe.io>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.1",
