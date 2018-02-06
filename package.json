@@ -40,7 +40,7 @@
     "babel-jest": "^22.1.0",
     "babel-plugin-ramda": "^1.4.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "enzyme": "^3.3.0",
@@ -60,7 +60,16 @@
   },
   "babel": {
     "presets": [
-      "es2015",
+      [
+        "env",
+        {
+          "browsers": [
+            "last 2 versions",
+            "IE >= 10"
+          ],
+          "useBuiltins": true
+        }
+      ],
       "stage-3",
       "react"
     ],
