@@ -1,5 +1,7 @@
 # react-conduit
 
+[![Build Status](https://travis-ci.org/trabe/react-conduit.svg?branch=master)](https://travis-ci.org/trabe/react-conduit)
+
 ## Description
 
 react-conduit allows you to render React components anywhere. Typical use case

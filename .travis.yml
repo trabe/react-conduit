@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- '6'
+- '7'
+- '8'
+- '9'
+cache:
+  directories:
+  - node_modules
+deploy:
+  provider: npm
+  email: contact@trabesoluciones.com
+  api_key:
+    secure: eVc7/fMyQCH6SiDTIZ/2iqhgzMeV/S91Lg4X5Gc/2KZPL1XLkHtOHBYtmZu+eGdnbqBx6+mfT7ArJGSxpv5o5lrLlJYbTvFi4Hj4cSTGf6eyBkZ/VnBISXRMx3E4EoTItIfpx5k6rA/9iGiYkUabUnch7cN09NelPM4FUq795zmj8Qrs62Smjo+Wc0vYwfprW4qVeje8wRVw1w5GHVrKE1xeYHoQUxlWZ1ZDKxAnzWupGRwJesgVZYsx0S8qx+mx9May8ywUZPig0e3Z6QdkQga7L2vcRgF4GOWA+pU3UrjHRhGW5n9G+lGS7mXvh/9glXKJiPL/VUq1Vuhv7Rce6MdHjJOo6cAdk+YKVMBC0QT/PtNCCQLKxlbik/Lz+DRY9aYvBdvD7n7eZyCj6FN+yer1sSAtBMjRazN0SeRCSYaa9yzArJARII4szK1IEiquW+aY0EKurvJ7AGn6+JlkSC3eCpbdWHjlNepFG0cXRHw0NNt1QmjMvkrjksUrzbAXXdptrISp2PuZcPhTOjz15ntK5e8w7wwmBHBrLPANXULm+FUZ1jnM/vtQ68tiRe/CIHmVi1dWXHfD6i+hq4Qv1agPQi5N8mCKs79BfePuUuS+uF/urVGD2ZElgLPIB0z3dCrSbVudI7+Bys+WFlX1WexslK1et+E+YR61jvrscRk=
+  on:
+    tags: true
+    repo: trabe/react-conduit
