@@ -1,5 +1,5 @@
 import createFragment from "react-addons-create-fragment";
-import { assoc, dissoc, filter, values } from "ramda";
+import { assoc, dissoc, values } from "ramda";
 import Conduit from "./conduit";
 
 class Registry {

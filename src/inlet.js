@@ -1,7 +1,6 @@
-import React, { Component, Children } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import uuidV4 from "uuid/v4";
-import { updateChildren, removeInlet, addInlet } from "./registry";
 
 export class Inlet extends Component {
   constructor(props) {

@@ -1,0 +1,11 @@
+{
+  "eslintConfig": {
+    "globals": {
+      "beforeEach": true,
+      "describe": true,
+      "expect": true,
+      "it": true,
+      "jest": true
+    }
+  }
+}

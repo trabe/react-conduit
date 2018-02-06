@@ -3,12 +3,6 @@ import { mount, render } from "enzyme";
 import { ConduitProvider, Inlet, Outlet, Registry } from "../src";
 
 const mountWithRegister = (element, registry) => mount(element, { context: { registry } });
-const mountWithProvider = element =>
-  mount(
-    <ConduitProvider>
-      {element}
-    </ConduitProvider>,
-  );
 
 describe("registry", () => {
   let registry;
@@ -32,7 +26,7 @@ describe("registry", () => {
           </Inlet>
           <Outlet label="1" />
         </div>
-      </ConduitProvider>
+      </ConduitProvider>,
     );
 
     expect(wrapper).toMatchSnapshot();
@@ -62,6 +56,7 @@ describe("registry", () => {
     const outlet1 = mountWithRegister(<Outlet label="1" />, registry);
     const outlet2 = mountWithRegister(<Outlet label="2" />, registry);
 
+    expect(inlet.html()).toBe(null);
     expect(outlet1.html()).toEqual("<div><p>content</p></div>");
     expect(outlet2.html()).toEqual("<div></div>");
     inlet.setProps({ label: "2" });
@@ -84,6 +79,8 @@ describe("registry", () => {
     );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
+    expect(inlet1.html()).toBe(null);
+    expect(inlet2.html()).toBe(null);
     expect(outlet.html()).toEqual("<div><p>content 1</p></div>");
     outlet.setProps({ label: "2" });
     expect(outlet.html()).toEqual("<div><p>content 2</p></div>");
@@ -98,6 +95,7 @@ describe("registry", () => {
     );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
+    expect(inlet1.html()).toBe(null);
     expect(outlet.html()).toEqual("<div><p>content 1</p></div>");
     mountWithRegister(
       <Inlet label="1">
@@ -123,6 +121,8 @@ describe("registry", () => {
     );
     const outlet = mountWithRegister(<Outlet label="1" />, registry);
 
+    expect(inlet1.html()).toBe(null);
+    expect(inlet2.html()).toBe(null);
     expect(outlet.html()).toEqual("<div><p>content 1</p><p>content 2</p></div>");
     inlet2.unmount();
     expect(outlet.html()).toEqual("<div><p>content 1</p></div>");
@@ -158,6 +158,8 @@ describe("registry", () => {
     );
     const outlet = mountWithRegister(<Outlet label="1" onConnect={outletSpy} />, registry);
 
+    expect(inlet.html()).toBe(null);
+    expect(outlet.html()).toEqual("<div><p>content</p></div>");
     expect(inletSpy).toHaveBeenCalledTimes(1);
     expect(outletSpy).toHaveBeenCalledTimes(1);
   });

@@ -1,4 +1,4 @@
-import React, { Component, Children } from "react";
+import { Component, Children } from "react";
 import PropTypes from "prop-types";
 import Registry from "./registry";
 

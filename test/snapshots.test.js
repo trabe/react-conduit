@@ -2,12 +2,7 @@ import React from "react";
 import { render } from "enzyme";
 import { ConduitProvider, Inlet, Outlet } from "../src";
 
-const renderWithProvider = element =>
-  render(
-    <ConduitProvider>
-      {element}
-    </ConduitProvider>,
-  );
+const renderWithProvider = element => render(<ConduitProvider>{element}</ConduitProvider>);
 
 describe("conduit snapshots", () => {
   describe("Inlet", () => {
