@@ -97,6 +97,12 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### v1.1.0
+
+* Updated all dependencies
+* No longer use Sinon and Chai for testing. Just jest.
+* Added ESLint + Prettier to make our code nicer
+
 ### v1.0.2
 
 * Support for React 16
