@@ -55,8 +55,7 @@
     "prettier": "^1.10.2",
     "react": "^16.2.0",
     "react-addons-create-fragment": "^15.6.2",
-    "react-dom": "^16.2.0",
-    "react-test-renderer": "^16.2.0"
+    "react-dom": "^16.2.0"
   },
   "babel": {
     "presets": [
