@@ -27,7 +27,7 @@
   "dependencies": {
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",
-    "uuid": "^3.2.1"
+    "uuid": "^3.3.2"
   },
   "peerDependencies": {
     "react": "^15.5.0 || ^16.0.0",
