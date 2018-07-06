@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import uuidV4 from "uuid";
+import uuidV4 from "uuid/v4";
 
 class Outlet extends Component {
   constructor(props, context) {
