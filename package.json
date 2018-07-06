@@ -1,6 +1,6 @@
 {
   "name": "react-conduit",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Place components anywhere in your DOM tree",
   "main": "lib/index.js",
   "repository": {

@@ -97,6 +97,11 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### v1.2.0
+
+* Update uuid dependency
+* Fix uuid imports to ease the pain of mocking test with jest
+
 ### v1.1.0
 
 * Updated all dependencies
