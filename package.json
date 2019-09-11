@@ -19,14 +19,14 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./lib",
-    "compile": "babel -d lib/ src/",
+    "compile": "babel --verbose -d lib/ src/",
     "lint": "eslint ./src ./test",
     "test": "jest",
     "prepublish": "npm run clean && npm run test && npm run compile"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
-    "ramda": "^0.25.0",
+    "ramda": "^0.26.1",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
@@ -34,80 +34,26 @@
     "react-addons-create-fragment": "^15.6.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.1",
-    "babel-jest": "^22.1.0",
-    "babel-plugin-ramda": "^1.4.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-3": "^6.24.1",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-ramda": "^2.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.1",
-    "eslint": "^4.17.0",
-    "eslint-config-prettier": "^2.9.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.2.0",
     "eslint-config-unobtrusive": "^1.2.1",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.6.1",
-    "jest": "^22.1.4",
+    "jest": "^24.9.0",
     "prettier": "^1.10.2",
-    "react": "^16.2.0",
+    "react": "^16.9.0",
     "react-addons-create-fragment": "^15.6.2",
-    "react-dom": "^16.2.0"
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "browsers": [
-            "last 2 versions",
-            "IE >= 10"
-          ],
-          "useBuiltins": true
-        }
-      ],
-      "stage-3",
-      "react"
-    ],
-    "plugins": [
-      "ramda",
-      "transform-class-properties"
-    ]
-  },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/test/enzyme-setup.js"
-    ],
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ]
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "plugins": [
-      "prettier"
-    ],
-    "extends": [
-      "unobtrusive",
-      "unobtrusive/react",
-      "prettier",
-      "prettier/react"
-    ],
-    "env": {
-      "browser": true
-    },
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "trailingComma": "all",
-          "singleQuote": false,
-          "printWidth": 120
-        }
-      ]
-    }
+    "react-dom": "^16.9.0"
   }
 }

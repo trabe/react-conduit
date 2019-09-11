@@ -97,6 +97,11 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### v2.0.0
+
+* Update dependencies
+* Use config files for tooling instead of package.json entries
+
 ### v1.2.0
 
 * Update uuid dependency
