@@ -3,6 +3,10 @@
   "version": "1.2.0",
   "description": "Place components anywhere in your DOM tree",
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/trabe/react-conduit.git"
