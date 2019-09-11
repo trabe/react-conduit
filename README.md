@@ -99,6 +99,7 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ### v2.0.0
 
+* [BREAKING] No longer supports React version &lt; 16.3.
 * Update dependencies
 * Use config files for tooling instead of package.json entries
 

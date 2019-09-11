@@ -15,7 +15,7 @@ export class Inlet extends Component {
     this.context.registry.updateConduits(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.context.registry.registerInlet(this);
   }
 

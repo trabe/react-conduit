@@ -30,7 +30,7 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "react": "^15.5.0 || ^16.0.0",
+    "react": "^16.3.0",
     "react-addons-create-fragment": "^15.6.0"
   },
   "devDependencies": {
