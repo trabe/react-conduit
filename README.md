@@ -97,45 +97,50 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### v3.0.0
+
+* [BREAKING] No longer supports React version &lt; 16.8.
+* Update dependencies
+
 ### v2.0.0
 
 * [BREAKING] No longer supports React version &lt; 16.3.
-* Update dependencies
-* Use config files for tooling instead of package.json entries
+* Update dependencies.
+* Use config files for tooling instead of package.json entries.
 
 ### v1.2.0
 
-* Update uuid dependency
-* Fix uuid imports to ease the pain of mocking test with jest
+* Update uuid dependency.
+* Fix uuid imports to ease the pain of mocking test with jest.
 
 ### v1.1.0
 
-* Updated all dependencies
+* Updated all dependencies.
 * No longer use Sinon and Chai for testing. Just jest.
-* Added ESLint + Prettier to make our code nicer
+* Added ESLint + Prettier to make our code nicer.
 
 ### v1.0.2
 
-* Support for React 16
+* Support for React 16.
 
 ### v1.0.1
 
-* Fix Inlet ordering not working
+* Fix Inlet ordering not working.
 
 ### v1.0.0
 
-* Add `onDisconnect` and `onConnect` callbacks to inlets and outlets
+* Add `onDisconnect` and `onConnect` callbacks to inlets and outlets.
 * Big refactor. Docs are on their way!
 
 ### v0.2.0
 
-* Add index prop to Inlet to allow reordering at output time
-* Add className and style props to Outlet to customize the wrapper
+* Add index prop to Inlet to allow reordering at output time.
+* Add className and style props to Outlet to customize the wrapper.
 
 ### v0.1.1
 
-* Fixed subscription/unsubscription gotchas
+* Fixed subscription/unsubscription gotchas.
 
 ### v0.1.0
 
-* Initial release
+* Initial release.
