@@ -11,5 +11,5 @@ module.exports = {
     ],
     "@babel/react",
   ],
-  plugins: ["@babel/plugin-proposal-class-properties", "babel-plugin-ramda"],
+  plugins: ["@babel/plugin-proposal-class-properties"],
 };

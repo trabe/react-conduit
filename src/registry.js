@@ -1,6 +1,6 @@
 import createFragment from "react-addons-create-fragment";
-import { assoc, dissoc, values } from "ramda";
 import Conduit from "./conduit";
+import { assoc, dissoc, values } from "./poor-man-ramda";
 
 class Registry {
   state = {
