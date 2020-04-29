@@ -97,6 +97,10 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
+### next
+
+* Remove ramda dependency.
+
 ### v3.0.0
 
 * [BREAKING] No longer supports React version &lt; 16.8.
