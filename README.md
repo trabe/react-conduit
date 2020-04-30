@@ -97,7 +97,7 @@ import { Inlet, Outlet, ConduitProvider } from "react-conduit";
 
 ## CHANGELOG
 
-### next
+### v3.1.0
 
 * Remove ramda dependency.
 
